@@ -46,21 +46,20 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
     try {
-        const pins = await Pin.find();
-        res.status(200).json(
-            {
-                success: true,
-                message: "All pins retrived successfully!",
-                data: pins
-            }
-        )
-    } catch (error) {
-        res.status(500).json(
-            {
-                success: false,
-                message: "Error getting pins!",
-                error: error
-            }
-        )
-    }
+        //find user
+        const user = await User.findOne({ username: req.body.username });
+        !user && res.status(400).json("Wrong username or password");
+    
+        //validate password
+        const validPassword = bcrypt.compare(
+          req.body.password,
+          user.password
+        );
+        !validPassword && res.status(400).json("Wrong username or password");
+
+        //send response
+        res.status(200).json({ _id: user._id, username: user.username });
+      } catch (err) {
+        res.status(500).json(err);
+      }
 }
