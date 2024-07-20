@@ -5,6 +5,6 @@ import userRoutes from './src/routes/user.routes.js';
 const router = Router()
 
 router.use('/pins', pinRoutes)
-router.use('/posts', userRoutes)
+router.use('/users', userRoutes)
 
 export default router
