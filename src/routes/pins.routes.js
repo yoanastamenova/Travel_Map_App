@@ -9,5 +9,4 @@ const router = Router();
 router.post('/create', createPin);
 router.get('/all', getAllPins);
 
-
 export default router
